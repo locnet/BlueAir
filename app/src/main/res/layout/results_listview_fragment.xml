@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adrian.com.blueair.ResultsMainActivity$PlaceholderFragment"
+    android:orientation="vertical">
+
+    <!-- in cazul in care nu am rezultate din orice motiv, arat acest layer,
+     initial nu este vizibil -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:visibility="gone"
+        android:id="@+id/noResultsError">
+        <TextView
+            style="@style/regularFont.medium"
+            android:text="@string/results_error"
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ListViewTitle"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/ListViewTitle"
+            android:id="@+id/topList_header">
+            <TextView
+                style="@style/ListViewTitleText"
+                android:id="@+id/topList_depCity" />
+            <ImageView
+                android:contentDescription="@string/image_description"
+                style="@style/resultIcons.ListViewIcon" />
+            <TextView
+                style="@style/ListViewTitleText"
+                android:id="@+id/topList_arrCity" />
+        </LinearLayout>
+        <com.example.adrian.com.blueair.HorizontalListView
+            style="@style/HorizontalListViewStyle"
+            android:id="@+id/departureListView"/>
+    </LinearLayout>
+
+    <!-- layout cu detaliile zborului, este aratat doar cand se face click pe un zbor -->
+    <include layout="@layout/departure_flights_detail_layout" />
+
+    <!-- Laoyout rezultate zbor intoarcere -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ListViewTitle"
+        android:orientation="vertical">
+        <LinearLayout
+            style="@style/ListViewTitle"
+            android:visibility="gone"
+            android:id="@+id/bottomList_header">
+            <TextView
+                style="@style/ListViewTitleText"
+                android:id="@+id/bottomList_depCity"/>
+            <ImageView
+                style="@style/resultIcons.ListViewIcon"
+                android:contentDescription="@string/image_description"
+                android:background="@drawable/return_redline"/>
+            <TextView
+                style="@style/ListViewTitleText"
+                android:id="@+id/bottomList_arrCity"/>
+        </LinearLayout>
+
+        <com.example.adrian.com.blueair.HorizontalListView
+            style="@style/HorizontalListViewStyle"
+            android:id="@+id/returnListView"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- layout cu detaliile zborului, este aratat doar cand se face click pe un zbor -->
+    <include layout="@layout/return_flights_detail_layout" />
+
+</LinearLayout>
+

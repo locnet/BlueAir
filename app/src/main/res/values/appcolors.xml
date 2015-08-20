@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+   <resources>
+    <color  name="lightBlue">
+            #19ccbc
+    </color>
+    <color name="blue">
+        #0574c9
+    </color>
+    <color name="black">
+        #282929
+    </color>
+    <color name="white">
+        #ffffff
+    </color>
+    <color name="darkBrown">
+        #166366
+    </color>
+    <color name="lightOrange">
+        #fe6362
+    </color>
+    <color name="lightRed">
+        #ff0000
+    </color>
+    <color name="lightGrey">
+        #d5d5d5
+    </color>
+    <color name="selectedListViewColor">
+        #b9c4c4
+    </color>
+    <color name="ultraLightGreen">
+        #53eb86
+    </color>
+    <color name="lightGreen">
+        #59e388
+    </color>
+    <color name="green">
+        #7ec697
+    </color>
+    <color name="darkGreen">
+        #31774C
+    </color>
+    <color name="brown">
+        #504640
+    </color>
+    <color name="resultText">
+        #8a939a
+    </color>
+    <color name="weatherText">
+        #8a939a
+    </color>
+   </resources>

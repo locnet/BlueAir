@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BlueAir App</string>
+    <string name="welcome_message">BlueAir, cele mai ieftine zboruri</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="oneway_button_text">Dus</string>
+    <string name="roundtrip_button_text">Dus-intors</string>
+    <string name="departureTextString">PLECARE</string>
+    <string name="returnTextString">INTOARCERE</string>
+    <string name="adults">ADULTI</string>
+    <string name="childs">COPII</string>
+    <string name="infants">INFANTI</string>
+    <string name="increaseBtnText">+</string>
+    <string name="decreaseBtnText">-</string>
+    <string name="search_button">Cauta zbor</string>
+    <string name="oneInt">1</string>
+    <string name="zeroInt">0</string>
+    <string name="title_activity_fetch_result">Rezultate</string>
+    <string name="connection_error">Eroare de conexiune</string>
+    <string name="xml_error">Eroare de XML</string>
+    <string name="results_error">Ne pare rau, nu avem nici un rezultat pentru ruta
+    selectionata. Te rugam sa te incerci din nou.</string>
+    <string name="calendar_image_description">Calendar image description</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fly_details">Zborul tau</string>
+    <string name="title_activity_services_set">ServicesSetActivity</string>
+    <string name="zero_price">0 €</string>
+    <string name="total_tax">Total servicii: 0,00 €</string>
+    <string name="image_description">Imagine...</string>
+    <string name="selectButtonText">Il vreau</string>
+    <string name="closeButtonText">Close</string>
+
+</resources>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <!-- dummy layout
+    * pentru a putea da margine intre elementii listei -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/result_listview_row_style"
+        android:padding="10dp"
+        android:id="@+id/visibleListItem">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/calendar"
+                android:contentDescription="@string/calendar_image_description"/>
+            <TextView
+                style="@style/regularFont.medium"
+                android:textColor="@color/blue"
+                android:id="@+id/departureDate" />
+
+            <!-- textView ascus cu data plecarii in format YYYY-MM-DD -->
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/depStandardDate"
+                android:visibility="invisible"
+                android:textSize="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clock"/>
+            <ImageView
+                style="@style/resultIcons"
+                android:background="@drawable/up_airplane"/>
+            <TextView
+                style="@style/regularFont.medium"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/departureSTD"/>
+
+            <ImageView
+                style="@style/resultIcons"
+                android:background="@drawable/down_ariplane"/>
+
+            <TextView
+                style="@style/regularFont.medium"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/departureSTA"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/seat"/>
+            <TextView
+                style="@style/regularFont"
+                android:textSize="14sp"
+                android:id="@+id/availableCount" />
+            <TextView
+                style="@style/regularFont"
+                android:textSize="14sp"
+                android:id="@+id/flightNumber" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/basket"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                android:textColor="@color/lightOrange"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:id="@+id/amount"/>
+            <!-- textview ascuns pentru pret copil, devine vizibil doar in cazul in care am
+             oferta separata pentru copil-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:id="@+id/childAmount" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textColor="@color/lightGrey"
+                android:textSize="15sp"
+                android:id="@+id/discountProcent"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

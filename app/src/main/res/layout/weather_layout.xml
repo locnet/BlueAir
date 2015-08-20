@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <!-- layout oras plecare -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- layout superior -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="1dp"
+                android:background="@color/lightBlue">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/departureLocation"
+                    android:textColor="@color/white"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:typeface="sans"
+                    android:textSize="15sp" />
+
+            </LinearLayout> <!-- fin layout superior -->
+
+            <!-- layout infierior -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <!-- layout inferior-stanga -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
+                        android:contentDescription="icon clima oras plecare"
+                        android:id="@+id/departureWeatherIcon"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/actualTemperature"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:textSize="38sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/weatherText"/>
+
+                    </LinearLayout><!-- fin layout inferior-stanga -->
+
+
+                <!-- layout dreapta -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="0dp"
+                        android:textSize="12sp"
+                        android:id="@+id/departureMaxTempView"
+                        android:textColor="@color/weatherText"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="12sp"
+                        android:id="@+id/departureMinTempView"
+                        android:textColor="@color/weatherText"/>
+
+                </LinearLayout> <!-- fin layout inferior-dreapta -->
+
+            </LinearLayout><!-- fin layout inferior -->
+
+    </LinearLayout> <!-- fin layout oras plecare -->
+
+    <!-- layout oras sosire -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- layout superior -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightBlue"
+            android:layout_marginLeft="1dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/arrivalLocation"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:typeface="sans"
+                android:textSize="15sp" />
+
+        </LinearLayout> <!-- fin layout superior -->
+
+        <!-- layout infierior -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <!-- layout inferior-stanga -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:contentDescription="icon clima oras sosire"
+                    android:id="@+id/arrivalWeatherIcon"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/arrivalActualTemperature"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textSize="38sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/weatherText"/>
+
+            </LinearLayout><!-- fin layout inferior-stanga -->
+
+
+            <!-- layout dreapta -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="0dp"
+                    android:textSize="12sp"
+                    android:id="@+id/arrivalMaxTempView"
+                    android:textColor="@color/weatherText"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:id="@+id/arrivalMinTempView"
+                    android:textColor="@color/weatherText"/>
+
+            </LinearLayout> <!-- fin layout inferior-dreapta -->
+
+        </LinearLayout><!-- fin layout inferior -->
+    </LinearLayout>
+
+
+</LinearLayout>

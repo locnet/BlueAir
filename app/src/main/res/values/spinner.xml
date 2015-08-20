@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="departure_city_array">
+        <item>Oras plecare</item>
+        <item>Antalya</item>
+        <item>Bacau</item>
+        <item>Barcelona-Prat</item>
+        <item>Bologna-Marconi</item>
+        <item>Bruxelles</item>
+        <item>Bucuresti-Otopeni</item>
+        <item>Catania-Fontanarossa</item>
+        <item>Dublin</item>
+        <item>Ibiza</item>
+        <item>Iasi</item>
+        <item>Koln</item>
+        <item>Larnaca</item>
+        <item>Liverpool-John-Lennon</item>
+        <item>Londra-Luton</item>
+        <item>Madrid-Barajas</item>
+        <item>Malaga</item>
+        <item>Milano-Bergamo</item>
+        <item>Milano-Linate</item>
+        <item>Napoli</item>
+        <item>Nice</item>
+        <item>Paris-Beveauis</item>
+        <item>Roma-Fiumicino</item>
+        <item>Sibiu</item>
+        <item>Stuttgart</item>
+        <item>Torino-Cuneo</item>
+        <item>Torino-Caselle</item>
+        <item>Valencia-Manises</item>
+    </string-array>
+</resources>

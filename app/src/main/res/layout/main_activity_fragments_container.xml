@@ -1,0 +1,20 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity$PlaceholderFragment">
+
+        <fragment
+            android:name="com.example.adrian.com.blueair.MainActivityBodyFragment"
+            android:id="@+id/body_layout"
+            android:layout_weight="6"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout="@layout/main_searchform_layout" />
+    </LinearLayout>
+</ScrollView>

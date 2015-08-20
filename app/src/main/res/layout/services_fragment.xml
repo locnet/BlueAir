@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adrian.com.blueair.ServicesFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:baselineAligned="true">
+
+        <ImageButton
+            style="@style/servicesImageButonStyle"
+            android:id="@+id/bagButton"
+            android:src="@drawable/bag" />
+
+        <ImageButton
+            style="@style/servicesImageButonStyle"
+            android:id="@+id/checkButton"
+            android:src="@drawable/checkin"/>
+
+        <ImageButton
+            style="@style/servicesImageButonStyle"
+            android:id="@+id/umButton"
+            android:src="@drawable/um"/>
+
+        <ImageButton
+            style="@style/servicesImageButonStyle"
+            android:id="@+id/cabinPetButton"
+            android:src="@drawable/cabinpet"/>
+
+        <ImageButton
+            style="@style/servicesImageButonStyle"
+            android:id="@+id/bigPetButton"
+            android:src="@drawable/bigpet"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>
