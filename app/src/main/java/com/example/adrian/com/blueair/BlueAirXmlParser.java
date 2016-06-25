@@ -10,8 +10,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * construit dupa exemplul luat din developer.android.com/training...
+/*|-----------------------------------------------------------------|
+  |                   PARSER XML                                    |
+  | Construit dupa exemplul luat din developer.android.com/training |
+  | Proceseaza rezultatul cautarii care vine in forma de XML        |
+  |-----------------------------------------------------------------|
  */
 public class BlueAirXmlParser {
     // nu folosim namespaces
@@ -31,16 +34,16 @@ public class BlueAirXmlParser {
 
     /**
      * cauta etichetele "JourneyDateMarket" si cheama readEntry pentru a procesa rezultatul
-     * @param parser
-     * @return List
+     * @param parser, raspunsul xml
+     * @return List, lista cu datele de care avem nevoie odata scoase din XML
      * @throws XmlPullParserException
      * @throws IOException
      */
     private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List entries = new ArrayList();
+        List<BlueAirXmlParser.Entry> entries = new ArrayList<Entry>();
 
-        // cand chem pentru prima oara functia parserul este la primul tag, "Schedules"
-        // asa ca trec la urmatorul
+        // cand chem pentru prima oara functia parserul este la prima eticheta: "Schedules"
+        // trec la urmatoarea eticheta
         parser.nextTag();
         parser.require(XmlPullParser.START_TAG, ns, "ArrayOfJourneyDateMarket");
 
@@ -54,9 +57,11 @@ public class BlueAirXmlParser {
             // detaliile zborului sunt intre etichetele <Journey>
             if (name.equals("Journey")) {
                 System.out.println("incep parsingul la XML");
-                entries.add(readEntry(parser));
-            } else {
-                continue;
+                try {
+                    entries.add(readEntry(parser));
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return entries;
@@ -110,8 +115,8 @@ public class BlueAirXmlParser {
      * din aceste date iau doar ce am nevoie, apoi creez un obiect Entry
      * pe care il populez cu datele scoase
      * Entry o sa fie atasat  listei "entries"
-     * @return Entry
-     * @param  parser
+     * @return Entry, un obiect ce contine un set de date corespunzator unui zbor
+     * @param  parser, xml care il citesc
      */
     private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "Journey");
@@ -163,9 +168,9 @@ public class BlueAirXmlParser {
                         // System.out.println("NU am PaxDiscountCode!");
                     } else {
                         discount = true;
-                        System.out.println("am PaxDiscountCode!");
+                        System.out.println("am PaxDiscountCode la adult!");
                     }
-                    // avem fareDiscountCode?
+                    // avem fareDiscountCode (reducere in procente)?
                     parser.nextTag();
                     if (parser.isEmptyElementTag()) {
                         // System.out.println("Nu am fareDiscountProcent la: " + parser.getPositionDescription());
@@ -179,32 +184,50 @@ public class BlueAirXmlParser {
 
                     // sunt la END_TAG de CurrencyCode, merg la urmatorul tag
                     parser.nextTag();
-                    AdtAmount = readDoubleTag(parser, "Amount",false);
+                    AdtAmount = readDoubleTag(parser, "Amount", false);
                     if (discount) {                  // am descuento
                         parser.nextTag();
                         skip(parser,"CurrencyCode");
                         parser.nextTag();
                         AdtFareDiscountAmount = readDoubleTag(parser, "Amount", false);
                     }
-                    // am si copii intre pasageri, desi pretul este acelasi il iau separat
-                    // fiindca este posibil ca BlueAir sa faca discount diferit pentru
-                    // copii
-                    skip(parser,"PaxFare");
+                    /*
+                    * am si copii intre pasageri, desi pretul este acelasi il iau separat
+                    * fiindca este posibil ca BlueAir sa faca discount diferit pentru copii
+                    */
+                    skip(parser,"PaxType");
                     parser.nextTag();
+                    if (parser.isEmptyElementTag()) {
+                        skip(parser,"PaxDiscountCode"); //  nu am discount
+                        // System.out.println("NU am PaxDiscountCode!");
+                    } else {
+                        discount = true;
+                        System.out.println("am PaxDiscountCode la copil!" + parser.getPositionDescription());
+                    }
+                    // avem fareDiscountCode (reducere in procente)?
 
-                    if (parser.getName().equals("PaxFare")) {
-                        // System.out.println("yuhuuu, am otro pax " + parser.getPositionDescription());
-                        skip(parser,"CurrencyCode");
+                    parser.nextTag();
+                    if (parser.isEmptyElementTag()) {
+                         System.out.println("Nu am fareDiscountProcent la: " + parser.getPositionDescription());
+                         parser.nextTag();
+                         skip(parser,"CurrencyCode");
+                    } else {
+                        discount = true;
+                        FareDiscountProcent = readStringTag(parser,"FareDiscountCode", false); // procent discount
+                        //System.out.println("control fareDiscountProcent " +
+                                //parser.getPositionDescription() + " disc: " + FareDiscountProcent);
+                        skip(parser, "CurrencyCode");
+                    }
+                    System.out.println("Am ajuns la: " + parser.getPositionDescription());
+                    // sunt la END_TAG de CurrencyCode, merg la urmatorul tag
+                    parser.nextTag();
+                    ChdAmount = readDoubleTag(parser, "Amount", true);
+                    if (discount) {                  // am descuento
                         parser.nextTag();
-                        ChdAmount = readDoubleTag(parser, "Amount", true);
-                        if (discount) {                  // am descuento
-                            parser.nextTag();
-                            skip(parser,"CurrencyCode");
-                            parser.nextTag();
-                            ChdFareDiscountAmount = readDoubleTag(parser, "Amount", true);
-                        }
-                        skip(parser,"PaxFare");
-                        // System.out.println("control, sunt la: " + parser.getPositionDescription());
+                        skip(parser, "CurrencyCode");
+                        parser.nextTag();
+                        ChdFareDiscountAmount = readDoubleTag(parser, "Amount", true);
+                        System.out.println("discount de: " + ChdFareDiscountAmount);
                     }
                     skip(parser,"FareSellKey");
 
@@ -223,23 +246,22 @@ public class BlueAirXmlParser {
 
         }
         parser.require(XmlPullParser.END_TAG,ns, "Journey"); // termin la tag-ul corect?
-        System.out.println("/////////////////////////////////");
         System.out.println("E final..." + parser.getPositionDescription());
+        System.out.println("|--- incep din nou ------|");
 
         // obiectul inapoiat contine un set de date corespunzator unui singur zbor
         return new Entry(DepartureDate, DepartureStation, ArrivalStation, STA, STD, FlightNumber,
-                FareDiscountProcent, AdtFareDiscountAmount, ChdFareDiscountAmount, AdtAmount, ChdAmount,
-                AvailableCount, SegmentSellKey);
-
+                         FareDiscountProcent, AdtFareDiscountAmount, ChdFareDiscountAmount,
+                         AdtAmount, ChdAmount, AvailableCount, SegmentSellKey);
     }
 
 
     /**
      * proceseza textul ce il gasim intre tag-uri
-     * @param parser
-     * @param tagName
-     * @param message
-     * @return
+     * @param parser, xml
+     * @param tagName, tagul pe care il caut
+     * @param message, mesaj cu numele tag-ului la care am eroare
+     * @return String, textul continut de tag-ul citit
      * @throws IOException
      * @throws XmlPullParserException
      */
@@ -250,17 +272,17 @@ public class BlueAirXmlParser {
         d = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, tagName);
         if (message) {
-            //System.out.println("Metoda readStringTag == " + tagName + ": " + d);
+            System.out.println("Metoda readStringTag a trecut pe la == " + tagName + ": " + d);
         }
         return d;
     }
 
     /**
      * proceseza tag-urile care contin double
-     * @param parser
-     * @param tagName
-     * @param message
-     * @return
+     * @param parser, xml
+     * @param tagName, numele tag-ului care il citesc
+     * @param message, mesaj cu numele etichetei la care ramane oprit in caz de eroare
+     * @return Double, cifra continuta de ethichete
      * @throws IOException
      * @throws XmlPullParserException
      */
@@ -271,15 +293,15 @@ public class BlueAirXmlParser {
         d = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, tagName);
         if (message) {
-            // System.out.println("Metoda readStringTag == " + tagName + ": " + d);
+            System.out.println("Metoda readDoubleTag a trecut pe la: " + tagName + ": " + d);
         }
         return Double.parseDouble(d);
     }
 
     /**
      * For the tags title and summary, extracts their text values.
-     * @param parser
-     * @return
+     * @param parser, xml care il citesc
+     * @return String, textul continut de eticheta
      * @throws IOException
      * @throws XmlPullParserException
      */
@@ -296,8 +318,8 @@ public class BlueAirXmlParser {
      * verifica daca primul zbor din lista de rezulate este un zbor care poate fi vandut
      * pretul zborului este in eticheta <Fare>
      * daca nu exista eticheta <Fare> zborul nu poate fi vandut
-     * @param parser
-     * @return
+     * @param parser, xml
+     * @return boolean, inapoiaza false daca nu am "Fare"
      * @throws XmlPullParserException
      * @throws IOException
      */
@@ -305,13 +327,14 @@ public class BlueAirXmlParser {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();
         }
-        boolean result = true;
+        boolean result;
         // parserul este la eticheta <Fares> care contine la randul ei eticheta <Fare>
         parser.nextTag();     // caut eticheta <Fare>
         String name = parser.getName();
 
         if (name.equals("Fare") && parser.getEventType() == XmlPullParser.START_TAG) {
            //  System.out.println("Am gasit Fares!");
+            result = true;
         } else {
             result = false;  // nu am <Fare>
             // System.out.println("Nu am fares");
@@ -321,16 +344,11 @@ public class BlueAirXmlParser {
         return result;
     }
 
-    /*
-     * metoda care traverseaza documentul Xml de la eticheta actual pana la urmatoarea
-     * eticheta de care am nevoie
-     */
-
     /**
      * metoda ajutatoare - traverseaza documentul xml de la eticheta actual pana la urmatoarea
      * echicheta de care am nevoie
      *
-     * @param parser
+     * @param parser xml
      * @param endTag  eticheta la care trebuie sa ma opresc
      * @throws XmlPullParserException
      * @throws IOException
@@ -355,6 +373,7 @@ public class BlueAirXmlParser {
                     }
                     // am observat ca parserul se opreste cand gaseste o eticheta care are
                     // atribut, ex: <State xmls="valoare atribut"  />
+                    // sar la urmatoarea eticheta
                     if (parser.getAttributeCount() != 0) {
                         continue;
                     }

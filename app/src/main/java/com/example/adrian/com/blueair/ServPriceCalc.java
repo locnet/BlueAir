@@ -91,7 +91,7 @@ public class ServPriceCalc {
 
                 break;
             case 2:
-                servicePrice = 5;    // checkin
+                servicePrice = 0;    // checkin
                 break;
             case 3:
                 servicePrice = 60;   // minor neisotit

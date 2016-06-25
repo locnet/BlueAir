@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ResultsMainActivity extends ActionBarActivity
@@ -96,6 +97,7 @@ public class ResultsMainActivity extends ActionBarActivity
         if (priceFragment != null) {
             priceFragment.priceMaker(args, segment);
         } else {
+            Toast.makeText(view.getContext(),"PriceFragment e null", Toast.LENGTH_SHORT).show();
             // TODO : daca o sa fac un container diferit in care priceFragment sa nu fie vizibil
             // din start trebuie adaugat codul aici
         }
@@ -133,7 +135,8 @@ public class ResultsMainActivity extends ActionBarActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            return  inflater.inflate(R.layout.result_activity_fragments_container, container, false);
+            return getActivity().getLayoutInflater()
+                    .inflate(R.layout.result_activity_fragments_container, container, false);
         }
     }
 }

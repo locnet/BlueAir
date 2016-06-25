@@ -46,7 +46,7 @@ public class ArrivalCitySetter {
 
         // Bucuresti-Otopeni
         final String[] OTP = {"Barcelona-Prat","Bologna-Marconi","Bruxelles","Catania-Fontanarossa",
-                               "Dublin","Iasi",
+                               "Dublin","Glasgow","Iasi",
                                "Koln","Larnaca","Lisabona","Londra-Luton","Madrid-Barajas",
                                "Malaga","Milano-Bergamo", "Milano-Linate", "Napoli",
                                "Nice","Liverpool-John-Lennon", "Paris-Beveauis","Roma-Fiumicino",
@@ -60,6 +60,10 @@ public class ArrivalCitySetter {
         // Dublin
         final String[] DUB = {"Bacau", "Bucuresti-Otopeni"};
         cityArray.add(DUB);
+
+        // Glasgow
+        final String[] GLA = {"Bucuresti-Otopeni"};
+        cityArray.add(GLA);
 
         // Ibiza
         final String[] IBZ = {"Torino-Caselle"};
@@ -153,6 +157,7 @@ public class ArrivalCitySetter {
         iataCodes.put("Bucuresti-Otopeni", "OTP");
         iataCodes.put("Catania-Fontanarossa", "CTA");
         iataCodes.put("Dublin","DUB");
+        iataCodes.put("Glasgow","GLA");
         iataCodes.put("Ibiza","IBZ");
         iataCodes.put("Iasi","IAS");
         iataCodes.put("Koln", "CGN");

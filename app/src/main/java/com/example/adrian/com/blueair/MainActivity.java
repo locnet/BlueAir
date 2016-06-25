@@ -54,8 +54,9 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.main_activity_fragments_container, container, false);
-            return rootView;
+            // return view;
+            return inflater.inflate(R.layout.main_activity_fragments_container, container, false);
+
         }
     }
 

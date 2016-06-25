@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * arrayadapter personalizat.
+ * ARRAYADAPTER PERSONALIZAT
  */
 public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
 
@@ -25,8 +25,16 @@ public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
     private static final String NR_FORMAT = "###,###.00";
     DecimalFormat decimalFormat = new DecimalFormat(NR_FORMAT);
 
+    /**
+     * am nevoie de un array pentru culoarea de la fiecare item in functie de pret
+     * o folosesc in ResultsFragment.java
+     */
+    public int[] circleColor = new int[this.getCount()];
+
     @Override
     public View getView(int position, View view, ViewGroup parent) {
+
+
         // creamos el View si il populam cu un element din array
         BlueAirXmlParser.Entry entry = getItem(position);
 
@@ -36,6 +44,7 @@ public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
         CircleWidget circleWidget = new CircleWidget(view.getContext(), linearLayout.getWidth(),
                 entry.AdtAmount,  getRanking(this, entry.AdtAmount));
         linearLayout.setBackground(circleWidget.getCircle());
+
         // calculez milisecundele
         String d = entry.DepartureDate.substring(0,10);  // data actuala, format yyyy-mm-dd
         long n = MyDateParser.getMillisecondsFromString(d);
@@ -52,7 +61,7 @@ public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
         TextView hideChildAmount = (TextView) view.findViewById(R.id.childAmount);
 
         /**
-         * data plecarii in format standard pentru a o putea diferentia pretul bagajului intre
+         * data plecarii in format standard pentru a  putea diferentia pretul bagajului intre
          * sezon estival sau sezon normal
          * @see com.example.adrian.com.blueair.ResultsMainActivity
          */
@@ -75,11 +84,13 @@ public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
 
         TextView discountText = (TextView) view.findViewById(R.id.discountProcent);
         if (entry.AdtAmount < 1) {
-            // bilete vandute, nu am pret
+            // toate biletele sunt vandute, nu am pret
             amountText.setText("Vandute");
+            // adaug la array culoarea gri
+            circleColor[position] = view.getResources().getColor(R.color.lightGrey);
         } else {
             // am oferta ?
-            if (entry.AdtFareDiscountAmount > 0) {
+            if (entry.AdtFareDiscountAmount > 0 || entry.ChdFareDiscountAmount > 0) {
                 double adt = entry.AdtAmount - entry.AdtFareDiscountAmount;
                 amountText.setText(decimalFormat.format(adt)  + " €");
 
@@ -91,6 +102,8 @@ public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
                 hideChildAmount.setText(decimalFormat.format(entry.ChdAmount)+"");
             }
         }
+        // se adauga la array culoarea item-ului respectiv
+        circleColor[position] = circleWidget.getCircleColor(entry.AdtAmount);
         return view;
     }
 
@@ -105,7 +118,7 @@ public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
     private int getRanking(ResultsArrayAdapter entries, Double price) {
         double control = 1000.00;
         int ranking = 0;
-        ArrayList<Double> matches = new ArrayList<Double>();
+        ArrayList<Double> matches = new ArrayList<>();
 
         for (int i = 0; i < this.getCount(); i++){
             // verific sa am pret mai mare ca 1 (sa nu fie vandute)
@@ -125,7 +138,15 @@ public class ResultsArrayAdapter extends ArrayAdapter<BlueAirXmlParser.Entry>{
                 }
             }
         }
-
         return ranking;
+    }
+
+    /**
+     * functie ajutatoare folosita in ResultsFragment.java, pentru a seta culoarea de la
+     * layout detalii zbor la fel cu cea a zborului selectionat
+     * @return array ce contine culorile corespunzatoare fiecarui pret
+     */
+    public int[] getAdapterColors() {
+        return circleColor;
     }
 }

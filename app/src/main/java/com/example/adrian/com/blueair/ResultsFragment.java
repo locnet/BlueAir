@@ -73,6 +73,10 @@ public class ResultsFragment extends Fragment  {
     // adapterul pentru rezultate, il populez in onPostExecute
     ResultsArrayAdapter mResultAdapter;
 
+    // arrayuri cu culorile corespunzatoare fiecarui pret, setat in ResultsArrayAdapter.java
+    private int[] depArrayColors;
+    private int[] retArrayColors;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.results_listview_fragment, container, false);
@@ -126,13 +130,14 @@ public class ResultsFragment extends Fragment  {
 
         /**
          *
-         * @param adapterView
-         * @param view
-         * @param position
-         * @param l
+         * @param adapterView adapterul
+         * @param view view
+         * @param position pozitie item selectat
+         * @param l long
          */
         @Override
-        public void onItemClick(AdapterView<?> adapterView, final View view, final int position, long l) {
+        public void onItemClick(AdapterView<?> adapterView, final View view,
+                                final int position, long l) {
         // legatura cu ResultMainActivity
         mListener.onFragmentInteraction(view, "departureSegment");
 
@@ -144,13 +149,16 @@ public class ResultsFragment extends Fragment  {
 
             // setez detaliile zborului si chem animatia
             setFlightDetails(view, "departure");
-            Animation slide = AnimationUtils.loadAnimation(getActivity(),R.anim.flights_result_animation);
+            Animation slide = AnimationUtils.loadAnimation(getActivity(), R.anim.flights_result_animation);
             if (departureFlightDetailsLayout.getVisibility() == View.GONE) {
                 departureFlightDetailsLayout.startAnimation(slide);
             } else {
                 slide = AnimationUtils.loadAnimation(getActivity(),R.anim.list_item_animation);
                 departureFlightDetailsLayout.startAnimation(slide);
             }
+
+            // setez culoarea layout-ului detalii zbor la fel cu cea a zborului
+            departureFlightDetailsLayout.setBackgroundColor(depArrayColors[position]);
             departureFlightDetailsLayout.setVisibility(View.VISIBLE);
         }
 
@@ -190,10 +198,10 @@ public class ResultsFragment extends Fragment  {
 
         /**
          *
-         * @param adapterView
-         * @param view
-         * @param position
-         * @param l
+         * @param adapterView adaptadorul
+         * @param view view actual
+         * @param position pozitie item selectat
+         * @param l long
          */
         @Override
         public void onItemClick(AdapterView<?> adapterView, final View view, final int position, long l) {
@@ -214,6 +222,9 @@ public class ResultsFragment extends Fragment  {
                     slide = AnimationUtils.loadAnimation(getActivity(),R.anim.list_item_animation);
                     returnFlightDetailsLayout.startAnimation(slide);
                 }
+
+                // setez culoarea layout-ului detalii zbor la fel cu cea a zborului
+                returnFlightDetailsLayout.setBackgroundColor(retArrayColors[position]);
                 returnFlightDetailsLayout.setVisibility(View.VISIBLE);
             }
 
@@ -272,7 +283,7 @@ public class ResultsFragment extends Fragment  {
      * comunicata activitati si altor fragmente din activitatea respectiva
      */
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(View view, String segment);
+        void onFragmentInteraction(View view, String segment);
     }
 
     /**
@@ -320,26 +331,31 @@ public class ResultsFragment extends Fragment  {
             ArrayList<BlueAirXmlParser.Entry> returnArrayOfResults;
             // metoda a fost chemata pt. zborul de dus
             if (tripType == 1) {
-                departureArrayOfResults = (ArrayList) result;
-                mResultAdapter = new ResultsArrayAdapter(getActivity(), departureArrayOfResults);
+                departureArrayOfResults = (ArrayList<BlueAirXmlParser.Entry>) result;
+                mResultAdapter = new ResultsArrayAdapter(getActivity(),departureArrayOfResults);
                 departureFlightList.setAdapter(mResultAdapter);
                 departureFlightList.setOnItemClickListener(depItemClickedHandler); // set listener
                 tripType++;
+                // array culori
+                depArrayColors = mResultAdapter.getAdapterColors();
             // metoda chemata pentru zborul de intoarcere
             } else if (tripType == 2) {
-                returnArrayOfResults = (ArrayList) result;
-                mResultAdapter = new ResultsArrayAdapter(getActivity(), returnArrayOfResults);
+                returnArrayOfResults = (ArrayList<BlueAirXmlParser.Entry>) result;
+                mResultAdapter = new ResultsArrayAdapter(getActivity(),
+                        returnArrayOfResults);
                 // listView-ul de intoarcere este ascuns in mod normal
                 returnFlightList.setVisibility(View.VISIBLE);
                 returnFlightList.setAdapter(mResultAdapter);
                 returnFlightList.setOnItemClickListener(retItemClickedHandler); // set listener
+                // array culori
+                retArrayColors = mResultAdapter.getAdapterColors();
             }
         }
     }
 
     /**
      * @param urlString url-ul de unde obtin xml
-     * @return rezultatele gasite
+     * @return entries un set de date cu zborurile gasite
      * @throws XmlPullParserException
      * @throws IOException
      */
@@ -353,15 +369,16 @@ public class ResultsFragment extends Fragment  {
         String cleanStream;
 
         try {
-            /* normal ar fi sa returnam direct stream-ul, dar am nevoie sa elimin
-            *  primele 3 caractere din raspunsul xml fiindca incepe cu caractere "OK:"  */
+            /*  normal ar fi sa returnam direct stream-ul, dar am nevoie sa elimin
+             *  primele 3 caractere din raspunsul xml fiindca incepe cu caracterele: "OK:"
+             */
             stream = downloadUrl(urlString);
             // transform stream-ul in string si tai primele 3 caractere
             cleanStream = getStringFromStream(stream);
 
             // transform din string in stream din nou
             in = new ByteArrayInputStream(cleanStream.getBytes());
-            entries = blueAirXmlParser.parse(in);
+            entries = (List<BlueAirXmlParser.Entry>) blueAirXmlParser.parse(in);
             return entries;
 
         } finally {
@@ -412,13 +429,14 @@ public class ResultsFragment extends Fragment  {
      * @param view view pe care s-a facut click
      */
     private void setWidgets(View view) {
-        // layout-uri care sunt deasupra listelor cu rezultate
 
+        // layout-uri care sunt deasupra listelor cu rezultate
         topList_header = (LinearLayout) view.findViewById(R.id.topList_header);
+
         // layout erroare de cautare, nu am rezultate
         noResultError = (LinearLayout) view.findViewById(R.id.noResultsError);
-
         bottomList_header = (LinearLayout) view.findViewById(R.id.bottomList_header);
+
         // header lista rezutlate zbor dus
         topListDepCity = (TextView) view.findViewById(R.id.topList_depCity);
         topListArrCity = (TextView) view.findViewById(R.id.topList_arrCity);
@@ -450,8 +468,8 @@ public class ResultsFragment extends Fragment  {
     }
 
     /**
-     * @param view
-     * @param segment
+     * @param view  view
+     * @param segment zborul de dus sau de intors
      */
     private void setFlightDetails(View view, String segment) {
         //ora sosire
@@ -459,11 +477,12 @@ public class ResultsFragment extends Fragment  {
         TextView departureSTA = (TextView) view.findViewById(R.id.departureSTA);
         TextView seats = (TextView) view.findViewById(R.id.availableCount);
         TextView flight = (TextView) view.findViewById(R.id.flightNumber);
-        // pret
+
+        /* //pret
         TextView amount = (TextView) view.findViewById(R.id.amount);
 
         // pret copil
-        TextView childAmount = (TextView) view.findViewById(R.id.childAmount);
+        TextView childAmount = (TextView) view.findViewById(R.id.childAmount);*/
 
         // discount
         TextView discont = (TextView) view.findViewById(R.id.discountProcent);

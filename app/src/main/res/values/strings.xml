@@ -32,4 +32,15 @@
     <string name="selectButtonText">Il vreau</string>
     <string name="closeButtonText">Close</string>
 
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="userText">\nContul meu</string>
+    <string name="flightText">\nCauta zbor</string>
+    <string name="checkinText">\nCheck-in</string>
+    <string name="autoText">\nInchirieri auto</string>
+    <string name="hotelText">\nHotel</string>
+    <string name="homeMainText">Bine ai venit \nla bord</string>
+    <string name="title_activity_checkin">CheckinActivity</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_home2">Home2Activity</string>
+
 </resources>

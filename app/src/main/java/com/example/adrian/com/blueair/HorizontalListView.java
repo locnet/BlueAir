@@ -166,8 +166,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         }
 
         if(mScroller.computeScrollOffset()){
-            int scrollx = mScroller.getCurrX();
-            mNextX = scrollx;
+            mNextX = mScroller.getCurrX();
         }
 
         if(mNextX <= 0){
@@ -302,8 +301,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        boolean handled = mGesture.onTouchEvent(ev);
-        return handled;
+        return mGesture.onTouchEvent(ev);
     }
 
     protected boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,

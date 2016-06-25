@@ -62,73 +62,14 @@ public class MainActivityBodyFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_searchform_layout, container, false);
-
-        // setamos listeners para los dos botones
-        onewayButton = (Button) view.findViewById(R.id.oneway_button);
-        onewayButton.setOnClickListener(this);
-        roundtripButton = (Button) view.findViewById(R.id.roundtrip_button);
-        roundtripButton.setOnClickListener(this);
-
-        // spinner ciudades de salida & listener
-        departureSpinner = (Spinner) view.findViewById(R.id.departure_spinner);
-        departureSpinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> depAdapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.departure_city_array, R.layout.spinner_row);
-        departureSpinner.setAdapter(depAdapter);
-
-        // spinner ciudades llegada
-        arrivalSpinner = (Spinner) view.findViewById(R.id.arrival_spinner);
-
-        departureDayValue = (TextView) view.findViewById(R.id.departureDayValue);
-        departureDayValue.setOnClickListener(this);
-        departureDayValue.setText(MyDateParser.getDayFromTime(depM) + "");
-        departureMonthAndYearValue = (TextView) view.findViewById(R.id.departureMonthAndYear);
-        departureMonthAndYearValue.setText(MyDateParser.getMonthAndYearFromTime(depM));
-
-        returnDayValue = (TextView) view.findViewById(R.id.returnDayValue);
-        returnDayValue.setOnClickListener(this);
-        returnDayValue.setText(MyDateParser.getDayFromTime(retM) + "");
-        returnMonthAndYearValue = (TextView) view.findViewById(R.id.returnMonthAndYear);
-        returnMonthAndYearValue.setText(MyDateParser.getMonthAndYearFromTime(retM));
-        // text view ascuns pentru data plecare / intoarcere
-        hideDepartureDate = (TextView) view.findViewById(R.id.hideDepartureTime);
-        hideReturnDate = (TextView) view.findViewById(R.id.hideReturnTime);
-        hideDepartureDate.setText(MyDateParser.getDateStringFromMiliseconds(depM));
-        hideReturnDate.setText(MyDateParser.getDateStringFromMiliseconds(retM));
-
-        // Textview numar pasageri
-        adults =  (TextView) view.findViewById(R.id.adultsNumber);
-        childs  = (TextView) view.findViewById(R.id.childsNumber);
-        infants = (TextView) view.findViewById(R.id.infantsNumber);
-
-        // butoanele "+" si "-"
-        adultIncrementBtn = (Button) view.findViewById(R.id.adultIncrementBtn);
-        adultDecreaseBtn = (Button) view.findViewById(R.id.adultDecreaseBtn);
-        childDecreaseBtn = (Button) view.findViewById(R.id.childDecreaseBtn);
-        childIncrementBtn = (Button) view.findViewById(R.id.childIncrementBtn);
-        infantIncrementBtn = (Button) view.findViewById(R.id.infantIncrementBtn);
-        infantDecreaseBtn = (Button) view.findViewById(R.id.infantDecreaseBtn);
-
-        // atasam un listener pentru fiecare buton "+" si "-"
-        adultIncrementBtn.setOnClickListener(passengerBtnListener);
-        adultDecreaseBtn.setOnClickListener(passengerBtnListener);
-        childIncrementBtn.setOnClickListener(passengerBtnListener);
-        childDecreaseBtn.setOnClickListener(passengerBtnListener);
-        infantIncrementBtn.setOnClickListener(passengerBtnListener);
-        infantDecreaseBtn.setOnClickListener(passengerBtnListener);
-
-        // buton cautare
-        searchButton = (Button) view.findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(searchButtonListener);
-
+        // initiez toate butoanele
+        setWidgets(view);
         return view;
     }
 
-    // sobreescribir el methodo onClick de la interfaz
-
     /**
-     *
-     * @param view
+     * override interface method
+     * @param view pe care s-a facut click
      */
     public void onClick(View view) {
         // click botones ida / ida-vuelta
@@ -182,7 +123,7 @@ public class MainActivityBodyFragment extends Fragment implements View.OnClickLi
 
         // ciudades de llegada
         // usamos ArrivalCitySetter pentru a popula spinner-ul de intors
-        ArrayAdapter<String> arrivalAdapter = new ArrayAdapter<String>(this.getActivity(),
+        ArrayAdapter<String> arrivalAdapter = new ArrayAdapter<>(this.getActivity(),
                 R.layout.spinner_row, arrivalCityArray.getArrivalCity(positionSelected));
         arrivalSpinner.setAdapter(arrivalAdapter);
 
@@ -296,10 +237,77 @@ public class MainActivityBodyFragment extends Fragment implements View.OnClickLi
 
             // verific daca am orasul de plecare setat
             if (departureSpinner.getSelectedItem().equals("Oras plecare")) {
-                Toast.makeText(getActivity(), "Trebuie sa alegeti un oras de plecare", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),
+                        "Trebuie sa alegeti un oras de plecare",
+                        Toast.LENGTH_LONG)
+                        .show();
             } else {
                 startActivity(intent);
             }
         }
     };
+
+    /**
+     * seteaza toate butoanele din view
+     * @param view el view principal
+     */
+    private void setWidgets(View view) {
+        // setamos listeners para los dos botones
+        onewayButton = (Button) view.findViewById(R.id.oneway_button);
+        onewayButton.setOnClickListener(this);
+        roundtripButton = (Button) view.findViewById(R.id.roundtrip_button);
+        roundtripButton.setOnClickListener(this);
+
+        // spinner ciudades de salida & listener
+        departureSpinner = (Spinner) view.findViewById(R.id.departure_spinner);
+        departureSpinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> depAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.departure_city_array, R.layout.spinner_row);
+        departureSpinner.setAdapter(depAdapter);
+
+        // spinner ciudades llegada
+        arrivalSpinner = (Spinner) view.findViewById(R.id.arrival_spinner);
+
+        departureDayValue = (TextView) view.findViewById(R.id.departureDayValue);
+        departureDayValue.setOnClickListener(this);
+        departureDayValue.setText(MyDateParser.getDayFromTime(depM) + "");
+        departureMonthAndYearValue = (TextView) view.findViewById(R.id.departureMonthAndYear);
+        departureMonthAndYearValue.setText(MyDateParser.getMonthAndYearFromTime(depM));
+
+        returnDayValue = (TextView) view.findViewById(R.id.returnDayValue);
+        returnDayValue.setOnClickListener(this);
+        returnDayValue.setText(MyDateParser.getDayFromTime(retM) + "");
+        returnMonthAndYearValue = (TextView) view.findViewById(R.id.returnMonthAndYear);
+        returnMonthAndYearValue.setText(MyDateParser.getMonthAndYearFromTime(retM));
+        // text view ascuns pentru data plecare / intoarcere
+        hideDepartureDate = (TextView) view.findViewById(R.id.hideDepartureTime);
+        hideReturnDate = (TextView) view.findViewById(R.id.hideReturnTime);
+        hideDepartureDate.setText(MyDateParser.getDateStringFromMiliseconds(depM));
+        hideReturnDate.setText(MyDateParser.getDateStringFromMiliseconds(retM));
+
+        // Textview numar pasageri
+        adults =  (TextView) view.findViewById(R.id.adultsNumber);
+        childs  = (TextView) view.findViewById(R.id.childsNumber);
+        infants = (TextView) view.findViewById(R.id.infantsNumber);
+
+        // butoanele "+" si "-"
+        adultIncrementBtn = (Button) view.findViewById(R.id.adultIncrementBtn);
+        adultDecreaseBtn = (Button) view.findViewById(R.id.adultDecreaseBtn);
+        childDecreaseBtn = (Button) view.findViewById(R.id.childDecreaseBtn);
+        childIncrementBtn = (Button) view.findViewById(R.id.childIncrementBtn);
+        infantIncrementBtn = (Button) view.findViewById(R.id.infantIncrementBtn);
+        infantDecreaseBtn = (Button) view.findViewById(R.id.infantDecreaseBtn);
+
+        // atasam un listener pentru fiecare buton "+" si "-"
+        adultIncrementBtn.setOnClickListener(passengerBtnListener);
+        adultDecreaseBtn.setOnClickListener(passengerBtnListener);
+        childIncrementBtn.setOnClickListener(passengerBtnListener);
+        childDecreaseBtn.setOnClickListener(passengerBtnListener);
+        infantIncrementBtn.setOnClickListener(passengerBtnListener);
+        infantDecreaseBtn.setOnClickListener(passengerBtnListener);
+
+        // buton cautare
+        searchButton = (Button) view.findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(searchButtonListener);
+    }
 }

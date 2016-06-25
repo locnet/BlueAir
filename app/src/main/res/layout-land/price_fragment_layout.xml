@@ -1,0 +1,123 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/price_fragment_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:visibility="gone"
+    tools:context="com.example.adrian.com.blueair.PriceFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- LAYOUT BUTOANE SERVICII -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:baselineAligned="true">
+
+            <ImageButton
+                style="@style/servicesImageButonStyle"
+                android:id="@+id/bagButton"
+                android:src="@drawable/bag" />
+
+            <ImageButton
+                style="@style/servicesImageButonStyle"
+                android:id="@+id/checkButton"
+                android:src="@drawable/checkin"/>
+
+            <ImageButton
+                style="@style/servicesImageButonStyle"
+                android:id="@+id/umButton"
+                android:src="@drawable/um"/>
+
+            <ImageButton
+                style="@style/servicesImageButonStyle"
+                android:src="@drawable/cabinpet"
+                android:id="@+id/cabinPetButton"/>
+
+            <ImageButton
+                style="@style/servicesImageButonStyle"
+                android:src="@drawable/bigpet"
+                android:id="@+id/bigPetButton" />
+
+        </LinearLayout> <!-- FIN LAYOUT SERVICII -->
+
+        <!-- LAYOUT PRET SERVICII -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:baselineAligned="true">
+            <TextView
+                style="@style/servicesImageButonStyle.text"
+                android:layout_gravity="left"
+                android:id="@+id/bagText"/>
+            <TextView
+                style="@style/servicesImageButonStyle.text"
+                android:layout_gravity="left"
+                android:id="@+id/checkinText"/>
+            <TextView
+                style="@style/servicesImageButonStyle.text"
+                android:layout_gravity="left"
+                android:id="@+id/umText"/>
+            <TextView
+                style="@style/servicesImageButonStyle.text"
+                android:layout_gravity="left"
+                android:id="@+id/cabinPetText"/>
+            <TextView
+                style="@style/servicesImageButonStyle.text"
+                android:layout_gravity="left"
+                android:id="@+id/bigPetText"/>
+
+        </LinearLayout>
+
+        <!-- LAYOUT PRET -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="20dp"
+            android:baselineAligned="true">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/priceTextStyle"
+                    android:id="@+id/price"/>
+                <TextView
+                    style="@style/priceTextStyle.tax"
+                    android:layout_marginBottom="0dp"
+                    android:id="@+id/adultPaxText" />
+                <TextView
+                    style="@style/priceTextStyle.tax"
+                    android:text="@string/total_tax"
+                    android:id="@+id/totalTaxPrice" />
+                <TextView
+                    style="@style/priceTextStyle.tax"
+                    android:textSize="12sp"
+                    android:layout_marginTop="0dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/taxText" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

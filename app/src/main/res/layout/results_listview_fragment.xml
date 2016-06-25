@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     tools:context="com.example.adrian.com.blueair.ResultsMainActivity$PlaceholderFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/lightGrey">
 
     <!-- in cazul in care nu am rezultate din orice motiv, arat acest layer,
      initial nu este vizibil -->
@@ -23,11 +24,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/departureResultsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ListViewTitle"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zbor de dus"
+            android:gravity="center"
+            android:textSize="14sp"/>
         <LinearLayout
             style="@style/ListViewTitle"
             android:id="@+id/topList_header">
@@ -44,17 +53,19 @@
         <com.example.adrian.com.blueair.HorizontalListView
             style="@style/HorizontalListViewStyle"
             android:id="@+id/departureListView"/>
+        <!-- layout cu detaliile zborului, este aratat doar cand se face click pe un zbor -->
+        <include layout="@layout/departure_flights_detail_layout" />
     </LinearLayout>
-
-    <!-- layout cu detaliile zborului, este aratat doar cand se face click pe un zbor -->
-    <include layout="@layout/departure_flights_detail_layout" />
 
     <!-- Laoyout rezultate zbor intoarcere -->
     <LinearLayout
+        android:id="@+id/returnResultsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ListViewTitle"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:background="@color/white">
         <LinearLayout
             style="@style/ListViewTitle"
             android:visibility="gone"
@@ -75,10 +86,12 @@
             style="@style/HorizontalListViewStyle"
             android:id="@+id/returnListView"
             android:visibility="gone"/>
+
+        <!-- layout cu detaliile zborului, este aratat doar cand se face click pe un zbor -->
+        <include layout="@layout/return_flights_detail_layout" />
     </LinearLayout>
 
-    <!-- layout cu detaliile zborului, este aratat doar cand se face click pe un zbor -->
-    <include layout="@layout/return_flights_detail_layout" />
+
 
 </LinearLayout>
 

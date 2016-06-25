@@ -66,7 +66,7 @@ public class PriceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.price_fragment, container, false);
+        View view =  inflater.inflate(R.layout.price_fragment_layout, container, false);
         frameLayout = (FrameLayout) view.findViewById(R.id.price_fragment_layout);
 
         // pret si taxe
@@ -93,7 +93,6 @@ public class PriceFragment extends Fragment {
         cabinPetButton.setOnClickListener(servicesListener);
         bigPetButton = (ImageButton) view.findViewById(R.id.bigPetButton);
         bigPetButton.setOnClickListener(servicesListener);
-
         return view;
     }
 
@@ -113,21 +112,20 @@ public class PriceFragment extends Fragment {
         if (tripType.equals("true")) {
          // zbor dus-intors, primul pasager plateste 17 €, al doilea 10, urmatorii 5
             if (paxNumber == 1) {
-                taxTotal = (FEE_TAX * 2) + ANULATION_TAX + 17;
+                taxTotal = 15;
             } else if (paxNumber == 2) {
-                taxTotal = (FEE_TAX * 2 * paxNumber) + (ANULATION_TAX * paxNumber) + 27;
+                taxTotal = 25;
             } else {
-                taxTotal = (FEE_TAX * 2 * paxNumber) + (ANULATION_TAX * paxNumber) +
-                        (paxNumber * 6) + 17;
+                taxTotal = (paxNumber * 5) + 15;
             }
         } else if (tripType.equals("false")) {
             // zbor doar dus
             if (paxNumber == 1) {
-                taxTotal = FEE_TAX + ANULATION_TAX + 11;
+                taxTotal = 10;
             } else if (paxNumber == 2) {
-                taxTotal = ((FEE_TAX + ANULATION_TAX) * paxNumber) + 17;
+                taxTotal =  15;
             } else {
-                taxTotal = ((FEE_TAX + ANULATION_TAX) * paxNumber) + ((paxNumber + 1) * 6);
+                taxTotal = ((paxNumber + 1) * 5);
             }
         }
         return taxTotal;
@@ -159,7 +157,9 @@ public class PriceFragment extends Fragment {
                  * ziua plecarii in milisecunde, am nevoie de data in dialogFragment
                  * pentru a seta pretul bagajului
                  */
-                departureDate = MyDateParser.getMillisecondsFromString(bundle.get("departure_date").toString());
+                departureDate = MyDateParser.
+                        getMillisecondsFromString(bundle.get("departure_date").
+                        toString());
 
                 // pret adult, vine in format xxx,xx €, elimin € si spatiu
                 String tempPrice = bundle.get("departurePrice").toString().replace(",",".");
@@ -168,10 +168,7 @@ public class PriceFragment extends Fragment {
                 // pret copil
                 String tempChildPrice = bundle.get("departureChdPrice").toString().replace(",",".");
                 departureChdPrice = Double.parseDouble(tempChildPrice);
-
-
             } else if (segment.equals("returnSegment")) {
-
                 /**
                  * ziua intoarcerii in milisecunde, am nevoie de data in dialogFragment
                  * pentru a pretul bagajului pretul bagajului
@@ -207,8 +204,10 @@ public class PriceFragment extends Fragment {
             departureCity = bundle.get("departure").toString();
             arrivalCity = bundle.get("arrival").toString();
 
+            // arat fragmentul de la pret
             frameLayout.setVisibility(View.VISIBLE);
-            priceTextView.setText("Total: " + decimalFormat.format(finalPrice +
+
+            priceTextView.setText("Total: \n" + decimalFormat.format(finalPrice +
                     ServPriceCalc.getBigTotal()) + " €");
 
             adultPaxText.setText("Pasageri: " + (pax_adt + pax_chd));
